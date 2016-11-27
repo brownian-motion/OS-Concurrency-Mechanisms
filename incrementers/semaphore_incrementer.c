@@ -7,7 +7,7 @@ extern volatile unsigned int glob;
 sem_t semaphore;
 
 void init_semaphore(){
-	sem_init(&semaphore, NULL, 1);
+	sem_init(&semaphore, 0, 1);
 }
 
 void* increment_with_semaphore(void * arg){
