@@ -80,7 +80,7 @@ main(int argc, char *argv[])
 		return 1;
 	}
 
-	int startTime = time();
+	int startTime = time(NULL));
 
 	int i;
 
@@ -90,7 +90,7 @@ main(int argc, char *argv[])
 			errExitEn(threadStatus, "pthread_create");
 	}
 
-	int allCreatedTime = time();
+	int allCreatedTime = time(NULL);
 
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
@@ -98,7 +98,7 @@ main(int argc, char *argv[])
 			errExitEn(threadStatus, "pthread_join");
 	}
 
-	int allFinishedTime = time();
+	int allFinishedTime = time(NULL);
 
 	printf("glob = %d\n", glob);
 	printf("Time to create threads:\t%.2f s",allCreatedTime-startTime);
