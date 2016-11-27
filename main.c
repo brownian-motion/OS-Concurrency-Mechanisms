@@ -34,7 +34,7 @@ void printUsage(){
 int
 main(int argc, char *argv[])
 {
-	pthread_t t1, t2;
+	struct timespec_t spec;
 	int numLoops, threadStatus, numThreads;
 
 	if(argc == 2 && streq(argv[1],"-h")){
@@ -80,7 +80,8 @@ main(int argc, char *argv[])
 		return 1;
 	}
 
-	int startTime = time(NULL);
+	clock_gettime(CLOCK_REALTIME, &spec);
+	int startTime = spec.tv_nsec;
 
 	int i;
 
@@ -90,7 +91,8 @@ main(int argc, char *argv[])
 			errExitEN(threadStatus, "pthread_create");
 	}
 
-	int allCreatedTime = time(NULL);
+	clock_gettime(CLOCK_REALTIME, &spec);
+	int allCreatedTime = spec.tv_nsec;
 
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
@@ -98,10 +100,11 @@ main(int argc, char *argv[])
 			errExitEN(threadStatus, "pthread_join");
 	}
 
-	int allFinishedTime = time(NULL);
+	clock_gettime(CLOCK_REALTIME, &spec);
+	int allFinishedTime = spec.tv_nsec;
 
 	printf("glob = %d\n", glob);
-	printf("Time to create threads:\t%.2f s\n",allCreatedTime-startTime);
-	printf("Time to run:\t\t%.2f s\n",allFinishedTime-startTime);
+	printf("Time to create threads:\t%.2f ms\n",(allCreatedTime-startTime)/1000.0f);
+	printf("Time to run:\t\t%.2f ms\n",(allFinishedTime-startTime)/1000.0f);
 	exit(EXIT_SUCCESS);
 }
