@@ -27,8 +27,8 @@ volatile unsigned int glob = 0;   /* "volatile" prevents compiler optimizations
 static void *(* incrementer_func)(void *) = 0; //what function each thread should use, to be set by main when parsing args
 
 void printUsage(){
-	printf("Usage: %s %s %s %s","./hw5","<num-loops>","<num-threads>","<concurrency-method>");
-	printf("Valid Concurrency methods are:\n\tnone\n\tmutex\n\tspinlock\n\treadwritelock\n\tsignalwait\n\tsemaphore\n");
+	fprintf(stderr,"Usage: %s %s %s %s\n","./hw5","<num-loops>","<num-threads>","<concurrency-method>");
+	fprintf(stderr,"Valid Concurrency methods are:\n\tnone\n\tmutex\n\tspinlock\n\treadwritelock\n\tsignalwait\n\tsemaphore\n");
 }
 
 int
@@ -81,7 +81,7 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	long int startTime_micros = spec.tv_nsec/1000l;
+	unsigned long int startTime_ms = spec.tv_nsec/1000000l;
 
 	int i;
 
@@ -92,7 +92,7 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	long int allCreatedTime_micros = spec.tv_nsec/1000l;
+	unsigned long int allCreatedTime_ms = spec.tv_nsec/1000000l;
 
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
@@ -101,10 +101,10 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	long int allFinishedTime_micros = spec.tv_nsec/1000l;
+	unsigned long int allFinishedTime_ms = spec.tv_nsec/1000000l;
 
 	printf("glob = %d\n", glob);
-	printf("Time to create threads:\t%10.2f ms\n",(allCreatedTime_micros-startTime_micros)/1000.0f);
-	printf("Time to run:\t\t%10.2f ms\n",(allFinishedTime_micros-startTime_micros)/1000.0f);
+	printf("Time to create threads:\t%7d ms\n",(allCreatedTime_ms-startTime_ms));
+	printf("Time to run:\t\t%7d ms\n",(allFinishedTime_ms-startTime_ms));
 	exit(EXIT_SUCCESS);
 }
