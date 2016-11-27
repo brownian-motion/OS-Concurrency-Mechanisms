@@ -87,7 +87,7 @@ main(int argc, char *argv[])
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_create(threads + i, NULL, incrementer_func, &numLoops);
 		if(threadStatus != 0)
-			errExitEn(threadStatus, "pthread_create");
+			errExitEN(threadStatus, "pthread_create");
 	}
 
 	int allCreatedTime = time(NULL);
@@ -95,7 +95,7 @@ main(int argc, char *argv[])
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
 		if(threadStatus != 0)
-			errExitEn(threadStatus, "pthread_join");
+			errExitEN(threadStatus, "pthread_join");
 	}
 
 	int allFinishedTime = time(NULL);
