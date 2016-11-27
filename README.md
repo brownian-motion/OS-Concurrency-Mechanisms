@@ -32,6 +32,16 @@ Each are outlined below.
 
 ### None
 The data is not guarded through any particular means; any thread may read or write the data at any time.
+#### Test Results
+
+	./hw5 100000 5 none
+	glob = 500000
+	Time to run:		     18 ms
+
+	./hw5 100000 50 none
+	glob = 426254
+	Time to run:		     84 ms
+	
 #### Pros
 This is extremely fast, and eliminates overhead due to locking mechanisms.
 #### Cons
@@ -41,6 +51,16 @@ This works best when "stale" data is not a bad thing - that is, when multiple th
 
 ### Mutex
 The data is guarded by locking a mutex before the critical incrementing section, and then unlocking it at the end of incrementation.
+#### Test Results
+
+	./hw5 100000 5 mutex
+	glob = 500000
+	Time to run:		     80 ms
+
+	./hw5 100000 50 mutex
+	glob = 5000000
+	Time to run:		    803 ms
+	
 #### Pros
 Very, very fast. Simple, and easy to use.
 #### Cons
@@ -50,6 +70,16 @@ Mutexes work best in low-level operations, where there is a predefined order of 
 
 ### Spin lock
 Each thread busywaits until its lock is available, then locks, increments, and unlocks.
+#### Test Results
+
+	./hw5 100000 5 spinlock
+	glob = 500000
+	Time to run:		    154 ms
+
+	./hw5 100000 50 spinlock
+	glob = 5000000
+	Time to run:		  12911 ms
+	
 #### Pros
 Simple, and easy to use.
 #### Cons
@@ -59,6 +89,16 @@ Efficient when there are very few threads, but *terrible* for many threads. It w
 
 ### Read-Write Lock
 Each thread repeatedly tries to obtain a lock for writing to a global variable, increments that variable, unlocks, and repeats until its job is done.
+#### Test results
+
+	./hw5 100000 5 readwritelock
+	glob = 500000
+	Time to run:		    187 ms
+
+	./hw5 100000 50 readwritelock
+	glob = 5000000
+	Time to run:		   9664 ms
+	
 #### Pros
 This lets other threads read concurrently as long as there is no thread trying to write, which removes some unnecessary blocking.
 #### Cons
@@ -68,6 +108,16 @@ This is best when many threads will need to read cocnurrently, but very few thre
 
 ### Signal/Wait
 Each thread waits until another thread signals that it is totally done, and then increments the global variable several times.
+#### Test Results
+
+	./hw5 100000 5 signalwait
+	glob = 500000
+	Time to run:		      9 ms
+
+	./hw5 100000 50 signalwait
+	glob = 5000000
+	Time to run:		     90 ms
+	
 #### Pros
 It's pretty fast, and makes efficient use of the time each thread is given.
 #### Cons
@@ -77,6 +127,16 @@ This is best when there a *lot* of threads running concurrently.
 
 ### Semaphore
 Decrements a semaphore counter using `sem_wait` on each loop to wait for a lock, increments the global counter, then increments the semaphore counter using `sem_post` to release the lock.
+#### Test Results
+
+	./hw5 100000 5 semaphore
+	glob = 500000
+	Time to run:		    164 ms
+
+	./hw5 100000 50 semaphore
+	glob = 5000000
+	Time to run:		   3448 ms
+	
 #### Pros
 Very simple, and effective for low-level operations.
 #### Cons
