@@ -1,3 +1,5 @@
+#pragma once
+
 static char *ename[] = {
     /*   0 */ "", 
     /*   1 */ "EPERM", "ENOENT", "ESRCH", "EINTR", "EIO", "ENXIO", 
