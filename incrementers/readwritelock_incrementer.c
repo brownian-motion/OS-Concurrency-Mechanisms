@@ -13,9 +13,9 @@ void init_readwritelock(){
 void* increment_with_readwritelock(void* arg){
 	int numLoops = *((int *) arg);
 	while(numLoops-- > 0){
-		pthread_rwlock_wrlock(&wrlock);
+		pthread_rwlock_wrlock(&rwlock);
 		glob++;
-		pthread_rwlock_unlock(&wrlock);
+		pthread_rwlock_unlock(&rwlock);
 	}
 	return NULL;
 }

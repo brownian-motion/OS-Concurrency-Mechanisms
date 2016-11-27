@@ -3,7 +3,7 @@
 
 extern volatile unsigned int glob;
 
-pthread_spinloc_t spinLock;
+pthread_spinlock_t spinLock;
 
 void init_spinlock(){
 	pthread_spin_init(&spinLock, PTHREAD_PROCESS_PRIVATE);

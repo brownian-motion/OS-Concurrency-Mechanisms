@@ -21,13 +21,13 @@
 
 #define streq(s1, s2) (strcmp(s1, s2) == 0)
 
-volatile int glob = 0;   /* "volatile" prevents compiler optimizations
+volatile unsigned int glob = 0;   /* "volatile" prevents compiler optimizations
                                    of arithmetic operations on 'glob' */
 
 static void *(* incrementer_func)(void *) = 0; //what function each thread should use, to be set by main when parsing args
 
 void printUsage(){
-	printf("Usage: %s %s %s %s",argv[0],"<num-loops>","<num-threads>","<concurrency-method>");
+	printf("Usage: %s %s %s %s","./hw5","<num-loops>","<num-threads>","<concurrency-method>");
 	printf("Valid Concurrency methods are:\n\tnone\n\tmutex\n\tspinlock\n\treadwritelock\n\tsignalwait\n\tsemaphore");
 }
 
@@ -52,21 +52,21 @@ main(int argc, char *argv[])
 	char * concurrencyMethod = argv[3];
 
 	if(streq(concurrencyMethod,"none")){
-		thread_func = &increment_with_no_lock;
+		incrementer_func = &increment_with_no_lock;
 	} else if(streq(concurrencyMethod,"mutex")){
-		thread_func = &increment_with_mutex;
+		incrementer_func = &increment_with_mutex;
 		init_mutex();
 	} else if(streq(concurrencyMethod,"spinlock")){
-		thread_func = &increment_with_spinlock;
+		incrementer_func = &increment_with_spinlock;
 		init_spinlock();
 	} else if(streq(concurrencyMethod,"readwritelock")){
-		thread_func = &increment_with_readwritelock;
+		incrementer_func = &increment_with_readwritelock;
 		init_readwritelock();
 	} else if(streq(concurrencyMethod,"signalwait")){
-		thread_func = &increment_with_signalwait;
+		incrementer_func = &increment_with_signalwait;
 		init_signalwait();
 	} else if(streq(concurrencyMethod,"semaphore")){
-		thread_func = &increment_with_semaphore;
+		incrementer_func = &increment_with_semaphore;
 		init_semaphore();
 	} else {
 		fprintf(stderr,"Error: invalid or unknown concurrency mechanism given (%s)",concurrencyMethod);
@@ -80,12 +80,12 @@ main(int argc, char *argv[])
 		return 1;
 	}
 
-	int startTime = time(NULL));
+	int startTime = time(NULL);
 
 	int i;
 
 	for(i = 0 ; i < numThreads ; i++){
-		theadStatus = pthread_create(threads + i, NULL, incrementer_func, &numLoops);
+		threadStatus = pthread_create(threads + i, NULL, incrementer_func, &numLoops);
 		if(threadStatus != 0)
 			errExitEn(threadStatus, "pthread_create");
 	}
