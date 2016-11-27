@@ -26,6 +26,9 @@ This code is derived from the [thread_inc.c](http://man7.org/tlpi/code/online/bo
  * [error_functions.h](http://man7.org/tlpi/code/online/book/lib/error_functions.h.html) and [.c](http://man7.org/tlpi/code/online/book/lib/error_functions.c.html) for reporting errors in command-line arguments, used by `tlpi_hdr.h`
   * [ename.c.inc](http://man7.org/tlpi/code/online/book/lib/ename.c.inc.html), a set of enums used by `error_functions.h`
 
+## Architecture/Implementation
+This code first parses the arguments passed to it, initializes the appropriate resources, selects which function to run for each thread, spawns the specified number of threads with the given function, and waits for them all to finish before reporting the results and duration of the program. The threads are each passed as an argument a pointer to the number of loops to run within each thread. The number of attempted increments is `<num-loops>`*`<num-threads>`.
+
 ## Concurrency Methods
 This program tests several methods of protecting shared resources in concurrent systems.
 Each are outlined below.
