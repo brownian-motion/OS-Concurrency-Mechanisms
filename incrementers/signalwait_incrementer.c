@@ -12,6 +12,7 @@ void init_signalwait(){
 	pthread_mutex_init(&mutex, NULL);
 }
 
+//I have no idea what I'm doing
 void* increment_with_signalwait(void* arg){
 	int numLoops = *((int *) arg);
 	while(numLoops-- > 0){
