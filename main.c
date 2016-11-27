@@ -9,7 +9,7 @@
 \*************************************************************************/
 
 #include <pthread.h>
-#include "tlpi_hdr.h"
+#include "include/tlpi_hdr.h"
 
 #include "incrementers/mutex_incrementer.c"
 #include "incrementers/semaphore_incrementer.c"
