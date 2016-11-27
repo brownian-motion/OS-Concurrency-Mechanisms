@@ -1,12 +1,13 @@
-/*************************************************************************\
-*                  Copyright (C) Michael Kerrisk, 2016.                   *
-*                                                                         *
-* This program is free software. You may use, modify, and redistribute it *
-* under the terms of the GNU General Public License as published by the   *
-* Free Software Foundation, either version 3 or (at your option) any      *
-* later version. This program is distributed without any warranty.  See   *
-* the file COPYING.gpl-v3 for details.                                    *
-\*************************************************************************/
+/**
+ * Authored by JJ Brown, 2016
+ * This program increments a global counter using different multithreading patterns,
+ * and prints the results (as well as how long they take).
+ * 
+ * Depending on what choice of concurrency pattern the user makes,
+ * this program will initialize the appropriate variables, select
+ * an incrementing function to run for each thread, and then initialized
+ * a specified number of threads to execute that function.
+ */
 
 #include <pthread.h>
 #include <time.h>
@@ -36,6 +37,7 @@ main(int argc, char *argv[])
 {
 	struct timespec spec;
 	int numLoops, threadStatus, numThreads;
+	int i;
 
 	if(argc == 2 && streq(argv[1],"-h")){
 		printUsage();
@@ -51,6 +53,7 @@ main(int argc, char *argv[])
 	numThreads = getInt(argv[2], GN_GT_0, "num-threads");
 	char * concurrencyMethod = argv[3];
 
+	//check which type to use, initialize that method's variables, and select which function each thread should run
 	if(streq(concurrencyMethod,"none")){
 		incrementer_func = &increment_with_no_lock;
 	} else if(streq(concurrencyMethod,"mutex")){
@@ -69,6 +72,7 @@ main(int argc, char *argv[])
 		incrementer_func = &increment_with_semaphore;
 		init_semaphore();
 	} else {
+		//or fail
 		fprintf(stderr,"Error: invalid or unknown concurrency mechanism given (%s)",concurrencyMethod);
 		return 1;
 	}
@@ -80,10 +84,10 @@ main(int argc, char *argv[])
 		return 1;
 	}
 
+	//Just for timing, grab the current time in milliseconds
 	clock_gettime(CLOCK_REALTIME, &spec);
 	unsigned long int startTime_ms = spec.tv_nsec/1000000ul + spec.tv_sec*1000ul;
 
-	int i;
 
 	//create all of the threads at once
 	for(i = 0 ; i < numThreads ; i++){
@@ -92,6 +96,7 @@ main(int argc, char *argv[])
 			errExitEN(threadStatus, "pthread_create");
 	}
 
+	//Just for timing, grab the current time in milliseconds
 	clock_gettime(CLOCK_REALTIME, &spec);
 	unsigned long int allCreatedTime_ms = spec.tv_nsec/1000000ul + spec.tv_sec*1000ul;
 
@@ -103,6 +108,7 @@ main(int argc, char *argv[])
 			errExitEN(threadStatus, "pthread_join");
 	}
 
+	//Just for timing, grab the current time in milliseconds
 	clock_gettime(CLOCK_REALTIME, &spec);
 	unsigned long int allFinishedTime_ms = spec.tv_nsec/1000000ul + spec.tv_sec*1000ul;
 
