@@ -8,7 +8,7 @@ pthread_cond_t hasThreadFinishedCondition;
 // pthread_mutex_t mutex;
 
 void init_signalwait(){
-	pthread_cond_init(&condition, NULL);
+	pthread_cond_init(&hasThreadFinishedCondition, NULL);
 	// pthread_mutex_init(&mutex, NULL);
 }
 
@@ -17,11 +17,11 @@ void* increment_with_signalwait(void* arg){
 	int numLoops = *((int *) arg);
 
 	while(glob % numLoops != 0)
-		pthread_cond_wait(&condition);
+		pthread_cond_wait(&hasThreadFinishedCondition);
 	for(int i = 0 ; i < numLoops ; i++){
 		glob++;
 	}
-	pthread_cond_signal(&condition);
+	pthread_cond_signal(&hasThreadFinishedCondition);
 
 	return NULL;
 }
