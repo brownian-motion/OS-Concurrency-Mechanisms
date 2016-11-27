@@ -2,7 +2,7 @@
 
 #include "semaphore.h"
 
-extern static volatile unsigned int glob;
+extern volatile unsigned int glob;
 
 sem_t semaphore;
 

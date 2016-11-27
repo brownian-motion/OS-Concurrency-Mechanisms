@@ -1,8 +1,8 @@
 #pragma once
 
-#include <pthread>
+#include <pthread.h>
 
-extern static volatile unsigned int glob;
+extern volatile unsigned int glob;
 
 pthread_cond_t condition;
 pthread_mutex_t mutex;

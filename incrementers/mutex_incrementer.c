@@ -1,8 +1,8 @@
-&#pragma once
+#pragma once
 
 #include <pthread.h>
 
-extern static volatile unsigned int glob;
+extern volatile unsigned int glob;
 
 pthread_mutex_t mutex;
 
@@ -15,7 +15,7 @@ int init_mutex(void){
 }
 
 void * increment_with_mutex(void * arg){
-	int numLoops = *((int *) arg)
+	int numLoops = *((int *) arg);
 	while(numLoops-- > 0){
 		pthread_mutex_lock(&mutex);
 		glob++;

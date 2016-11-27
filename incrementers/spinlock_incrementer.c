@@ -1,7 +1,7 @@
 #pragma once
-#include <pthread>
+#include <pthread.h>
 
-extern static volatile unsigned int glob;
+extern volatile unsigned int glob;
 
 pthread_spinloc_t spinLock;
 

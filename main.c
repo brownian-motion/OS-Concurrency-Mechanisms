@@ -20,25 +20,10 @@
 
 #define streq(s1, s2) (strcmp(s1, s2) == 0)
 
-static volatile int glob = 0;   /* "volatile" prevents compiler optimizations
+volatile int glob = 0;   /* "volatile" prevents compiler optimizations
                                    of arithmetic operations on 'glob' */
 
 static void *(* incrementer_func)(void *) = 0; //what function each thread should use, to be set by main when parsing args
-
-static void *                   /* Loop 'arg' times incrementing 'glob' */
-threadFunc(void *arg)
-{
-	int loops = *((int *) arg);
-	int loc, j;
-
-	for (j = 0; j < loops; j++) {
-		loc = glob;
-		loc++;
-		glob = loc;
-	}
-
-	return NULL;
-}
 
 void printUsage(){
 	printf("Usage: %s %s %s %s",argv[0],"<num-loops>","<num-threads>","<concurrency-method>");

@@ -1,6 +1,6 @@
 #pragma once
 
-extern static volatile unsigned int glob;
+extern volatile unsigned int glob;
 
 void* increment_with_no_lock(void* arg){
 	int numLoops = *((int *) arg);
