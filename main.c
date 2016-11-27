@@ -34,7 +34,7 @@ void printUsage(){
 int
 main(int argc, char *argv[])
 {
-	struct timespec_t spec;
+	struct timespec spec;
 	int numLoops, threadStatus, numThreads;
 
 	if(argc == 2 && streq(argv[1],"-h")){
