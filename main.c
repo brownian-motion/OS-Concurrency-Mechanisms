@@ -28,7 +28,7 @@ static void *(* incrementer_func)(void *) = 0; //what function each thread shoul
 
 void printUsage(){
 	printf("Usage: %s %s %s %s","./hw5","<num-loops>","<num-threads>","<concurrency-method>");
-	printf("Valid Concurrency methods are:\n\tnone\n\tmutex\n\tspinlock\n\treadwritelock\n\tsignalwait\n\tsemaphore");
+	printf("Valid Concurrency methods are:\n\tnone\n\tmutex\n\tspinlock\n\treadwritelock\n\tsignalwait\n\tsemaphore\n");
 }
 
 int
@@ -101,7 +101,7 @@ main(int argc, char *argv[])
 	int allFinishedTime = time(NULL);
 
 	printf("glob = %d\n", glob);
-	printf("Time to create threads:\t%.2f s",allCreatedTime-startTime);
-	printf("Time to run:\t\t%.2f s",allFinishedTime-startTime);
+	printf("Time to create threads:\t%.2f s\n",allCreatedTime-startTime);
+	printf("Time to run:\t\t%.2f s\n",allFinishedTime-startTime);
 	exit(EXIT_SUCCESS);
 }
