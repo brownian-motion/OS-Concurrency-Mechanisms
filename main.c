@@ -10,7 +10,7 @@
 
 #include <pthread.h>
 #include <time.h>
-#include "include/tlpi_hdr.h"
+#include "include/dependencies.h"
 
 #include "incrementers/mutex_incrementer.c"
 #include "incrementers/semaphore_incrementer.c"
