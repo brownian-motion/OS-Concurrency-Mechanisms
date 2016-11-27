@@ -9,6 +9,7 @@
 \*************************************************************************/
 
 #include <pthread.h>
+#include <time.h>
 #include "include/tlpi_hdr.h"
 
 #include "incrementers/mutex_incrementer.c"
@@ -81,7 +82,9 @@ main(int argc, char *argv[])
 
 	int startTime = time();
 
-	for(int i = 0 ; i < numThreads ; i++){
+	int i;
+
+	for(i = 0 ; i < numThreads ; i++){
 		theadStatus = pthread_create(threads + i, NULL, incrementer_func, &numLoops);
 		if(threadStatus != 0)
 			errExitEn(threadStatus, "pthread_create");
@@ -89,7 +92,7 @@ main(int argc, char *argv[])
 
 	int allCreatedTime = time();
 
-	for(int i = 0 ; i < numThreads ; i++){
+	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
 		if(threadStatus != 0)
 			errExitEn(threadStatus, "pthread_join");
@@ -98,7 +101,7 @@ main(int argc, char *argv[])
 	int allFinishedTime = time();
 
 	printf("glob = %d\n", glob);
-	printf("Time to create threads:\t%.2f s",(allCreatedTime-startTime)/1000f);
-	printf("Time to run:\t\t%.2f s",(allFinishedTime-startTime)/1000f);
+	printf("Time to create threads:\t%.2f s",allCreatedTime-startTime);
+	printf("Time to run:\t\t%.2f s",allFinishedTime-startTime);
 	exit(EXIT_SUCCESS);
 }
