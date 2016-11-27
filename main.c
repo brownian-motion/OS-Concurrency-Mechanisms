@@ -81,7 +81,7 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	unsigned long int startTime_ms = spec.tv_nsec/1000000l;
+	unsigned long int startTime_ms = spec.tv_nsec/1000000l + spec.tv_sec*1000;;
 
 	int i;
 
@@ -92,7 +92,7 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	unsigned long int allCreatedTime_ms = spec.tv_nsec/1000000l;
+	unsigned long int allCreatedTime_ms = spec.tv_nsec/1000000l + spec.tv_sec*1000;;
 
 	for(i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
@@ -101,7 +101,7 @@ main(int argc, char *argv[])
 	}
 
 	clock_gettime(CLOCK_REALTIME, &spec);
-	unsigned long int allFinishedTime_ms = spec.tv_nsec/1000000l;
+	unsigned long int allFinishedTime_ms = spec.tv_nsec/1000000l + spec.tv_sec*1000;;
 
 	printf("glob = %d\n", glob);
 	printf("Time to create threads:\t%7lu ms\n",(allCreatedTime_ms-startTime_ms));
