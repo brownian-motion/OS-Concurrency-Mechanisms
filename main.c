@@ -104,7 +104,7 @@ main(int argc, char *argv[])
 	unsigned long int allFinishedTime_ms = spec.tv_nsec/1000000l;
 
 	printf("glob = %d\n", glob);
-	printf("Time to create threads:\t%7d ms\n",(allCreatedTime_ms-startTime_ms));
-	printf("Time to run:\t\t%7d ms\n",(allFinishedTime_ms-startTime_ms));
+	printf("Time to create threads:\t%7lu ms\n",(allCreatedTime_ms-startTime_ms));
+	printf("Time to run:\t\t%7lu ms\n",(allFinishedTime_ms-startTime_ms));
 	exit(EXIT_SUCCESS);
 }
