@@ -21,9 +21,10 @@ Using a Makefile, compiling the code with `make all` should create an executable
 ### Dependencies
 This code is derived from the [thread_inc.c](http://man7.org/tlpi/code/online/book/threads/thread_incr.c.html) script in the Linux Programming Interface book, and depends on the `pthread` library embedded in Linux, found [here](http://man7.org/tlpi/code/index.html), as well as the following individual files:
 
-* [tlpi_hdr.h](http://man7.org/tlpi/code/online/book/lib/tlpi_hdr.h.html) and [.c](http://man7.org/tlpi/code/online/book/lib/tlpi_hdr.c.html) for parsing command-line arguments
+* [tlpi_hdr.h](http://man7.org/tlpi/code/online/book/lib/tlpi_hdr.h.html) for parsing command-line arguments
  * [get_num.h](http://man7.org/tlpi/code/online/book/lib/get_num.h.html) and [.c](http://man7.org/tlpi/code/online/book/lib/get_num.c.html) for parsing numbers, used by `tlpi_hdr.h`
  * [error_functions.h](http://man7.org/tlpi/code/online/book/lib/error_functions.h.html) and [.c](http://man7.org/tlpi/code/online/book/lib/error_functions.c.html) for reporting errors in command-line arguments, used by `tlpi_hdr.h`
+  * [ename.c.inc](http://man7.org/tlpi/code/online/book/lib/ename.c.inc.html), a set of enums used by `error_functions.h`
 
 ## Concurrency Methods
 This program tests several methods of protecting shared resources in concurrent systems.
