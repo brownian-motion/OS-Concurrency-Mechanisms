@@ -5,23 +5,26 @@
 extern volatile unsigned int glob;
 
 pthread_cond_t hasThreadFinishedCondition;
-// pthread_mutex_t mutex;
+pthread_mutex_t mutex;
 
 void init_signalwait(){
 	pthread_cond_init(&hasThreadFinishedCondition, NULL);
-	// pthread_mutex_init(&mutex, NULL);
+	pthread_mutex_init(&mutex, NULL);
 }
 
 //I have no idea what I'm doing
 void* increment_with_signalwait(void* arg){
 	int numLoops = *((int *) arg);
 
+	pthread_mutex_lock(&mutex);
 	while(glob % numLoops != 0)
-		pthread_cond_wait(&hasThreadFinishedCondition);
-	for(int i = 0 ; i < numLoops ; i++){
+		pthread_cond_wait(&mutex, &hasThreadFinishedCondition);
+	int i;
+	for(i = 0 ; i < numLoops ; i++){
 		glob++;
 	}
 	pthread_cond_signal(&hasThreadFinishedCondition);
+	pthread_mutex_unlock(&mutex);
 
 	return NULL;
 }
