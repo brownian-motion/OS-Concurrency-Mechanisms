@@ -40,7 +40,7 @@ main(int argc, char *argv[])
 	if(argc == 2 && streq(argv[1],"-h")){
 		printUsage();
 		return 0;
-	} else if(argc != 3){
+	} else if(argc != 4){ //3 for the arguments + the 1 for the file name
 		fprintf(stderr,"Error: incorrect # of args");
 		printUsage();
 		return 1;
