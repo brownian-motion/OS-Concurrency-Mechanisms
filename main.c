@@ -11,8 +11,12 @@
 #include <pthread.h>
 #include "tlpi_hdr.h"
 
-#include "mutex_incrementer.c"
-#include "semaphore_incrementer.c"
+#include "incrementers/mutex_incrementer.c"
+#include "incrementers/semaphore_incrementer.c"
+#include "incrementers/spinlock_incrementer.c"
+#include "incrementers/readwritelock_incrementer.c"
+#include "incrementers/signalwait_incrementer.c"
+#include "incrementers/bare_incrementer.c"
 
 #define streq(s1, s2) (strcmp(s1, s2) == 0)
 
@@ -83,11 +87,14 @@ main(int argc, char *argv[])
 		return 1;
 	}
 
+
 	pthread_t* threads = malloc(sizeof(pthread_t) * numThreads);
 	if(threads == NULL){
 		fprintf(stderr,"Error: could not allocate memory for %d threads.",numThreads);
 		return 1;
 	}
+
+	int startTime = time();
 
 	for(int i = 0 ; i < numThreads ; i++){
 		theadStatus = pthread_create(threads + i, NULL, incrementer_func, &numLoops);
@@ -95,12 +102,18 @@ main(int argc, char *argv[])
 			errExitEn(threadStatus, "pthread_create");
 	}
 
+	int allCreatedTime = time();
+
 	for(int i = 0 ; i < numThreads ; i++){
 		threadStatus = pthread_join(threads[i], NULL);
 		if(threadStatus != 0)
 			errExitEn(threadStatus, "pthread_join");
 	}
 
+	int allFinishedTime = time();
+
 	printf("glob = %d\n", glob);
+	printf("Time to create threads:\t%.2f s",(allCreatedTime-startTime)/1000f);
+	printf("Time to run:\t\t%.2f s",(allFinishedTime-startTime)/1000f);
 	exit(EXIT_SUCCESS);
 }
